@@ -2,7 +2,7 @@
 
 """
     usage:
-        python3 orfeas_gkourlias_deelopdracht01.py
+        python3 snp.py .\POU5F1.aln
 """
 
 # METADATA VARIABLES
@@ -29,7 +29,7 @@ class aln_file():
 
 # FUNCTIONS
 def get_counts(file):
-    """ Desc """
+    """ Counts the SNP variations and stores them in a list. """
     pos_list = []
     for pos in range(0, len((file[1].seq))):
         snp_dict = {}
@@ -44,7 +44,8 @@ def get_counts(file):
     return pos_list
 
 def count_conflicts(pos_list):
-    """ Desc """
+    """ Detects whether amino acids are differing in class
+     and returns countamount of said positions. """
     classi_conflict = 0
 
     for dict in pos_list:
@@ -68,7 +69,8 @@ def count_conflicts(pos_list):
     return classi_conflict
 
 def rate_harm(conflict_count, file):
-    """ Desc """
+    """ Receives amount of amino acid class changes
+    and determines a score based on a calculated percentage. """
     ratio = conflict_count / len(file[1].seq)
 
     return f"The MSA receives a conservation score of {round(10-ratio*10)}, " \
@@ -77,7 +79,7 @@ def rate_harm(conflict_count, file):
 
 # MAIN
 def main(args):
-    """ Main function """
+    """ Main function. """
     file = AlignIO.read(sys.argv[1], "fasta")
     pos_list = get_counts(file)
     conflict_count = count_conflicts(pos_list)
